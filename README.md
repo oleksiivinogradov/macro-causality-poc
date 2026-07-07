@@ -14,20 +14,13 @@ By treating complex systems as "Information Branes" and modeling system entropy 
 * **Maximum Entropy Initialization:** Agents are spawned in a 2D phase space with random coordinates.
 * **Informational Debt Generation:** A dynamic adjacency matrix represents unresolved transactions or "quantum entanglement" between agents.
 * **Topological Probability Collapse:** A custom gradient descent algorithm forces connected nodes to cluster, overcoming simulated Brownian noise (kinetic energy).
-* **Real-time Animation:** Visualizes the transition from chaos to eventual consistency (synchronicity).
+* **Multi-Topology Support:** The simulation now supports stress-testing the framework across different network topologies to observe the robustness of macro-causality:
+  * Erdős-Rényi (`random`)
+  * Watts-Strogatz (`small_world`)
+  * Barabási-Albert (`scale_free`)
 
 ## Requirements
 To run the simulation, you will need Python 3 installed along with the following libraries:
 
+```bash
 pip install numpy matplotlib networkx
-
-## Running the Simulation
-Execute the main Python script to launch the real-time visualization:
-
-python information_brane_poc.py
-
-## Author
-**Oleksii Vynogradov**  
-*Dragomanova Ukrainian State University*  
-*Certified AI Engineer & Systems Architect*  
-[LinkedIn Profile](https://www.linkedin.com/in/oleksiivinogradov)
