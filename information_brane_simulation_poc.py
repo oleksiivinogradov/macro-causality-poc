@@ -4,19 +4,28 @@ import matplotlib.animation as animation
 import networkx as nx
 
 class InformationBraneSimulation:
-    """
-    Simulation of topological probability collapse on an Information Brane 
-    using the Least Action Principle to minimize informational debt.
-    """
-    def __init__(self, num_agents=60, num_connections=60, learning_rate=0.05):
+    def __init__(self, num_agents=60, num_connections=60, topology='random', learning_rate=0.05):
         self.num_agents = num_agents
         self.lr = learning_rate
+        self.topology = topology
         
-        # Initialize phase space (Brane) with maximum entropy (random coordinates)
+        # 1. Initialize Phase Space (Brane) with maximum entropy (random coordinates)
         self.positions = np.random.rand(num_agents, 2) * 100
         
-        # Generate informational debt (Quantum entanglement / Strings / Transactions)
-        self.graph = nx.gnm_random_graph(num_agents, num_connections)
+        # 2. Generate Topology (Informational debt / Entanglement)
+        # Added topologies based on Dr. Levada's recommendation
+        if topology == 'random':
+            # Erdős-Rényi random graph
+            self.graph = nx.gnm_random_graph(num_agents, num_connections)
+        elif topology == 'small_world':
+            # Watts-Strogatz small-world graph
+            self.graph = nx.watts_strogatz_graph(num_agents, k=4, p=0.1)
+        elif topology == 'scale_free':
+            # Barabási-Albert scale-free graph
+            self.graph = nx.barabasi_albert_graph(num_agents, m=2)
+        else:
+            raise ValueError("Unknown topology. Choose 'random', 'small_world', or 'scale_free'.")
+
         self.adjacency = nx.to_numpy_array(self.graph)
 
     def step(self):
@@ -40,8 +49,11 @@ class InformationBraneSimulation:
         self.positions += gradients * self.lr
 
 if __name__ == "__main__":
-    print("Initiating quantum graph on the Information Brane...")
-    sim = InformationBraneSimulation()
+    # You can change the topology here to 'random', 'small_world', or 'scale_free'
+    selected_topology = 'scale_free' 
+    
+    print(f"Initiating quantum graph on the Information Brane using '{selected_topology}' topology...")
+    sim = InformationBraneSimulation(topology=selected_topology)
 
     # Set up the animation window
     fig, ax = plt.subplots(figsize=(10, 8))
@@ -53,7 +65,7 @@ if __name__ == "__main__":
         ax.set_xlim(-20, 120)
         ax.set_ylim(-20, 120)
         ax.set_title(
-            f"Epoch {frame}: Minimizing Informational Debt (Least Action Principle)\nEmergent Macro-Causality Clustering", 
+            f"Epoch {frame}: Minimizing Informational Debt (Least Action Principle)\nTopology: {selected_topology.replace('_', ' ').title()}", 
             fontsize=14
         )
         
@@ -71,7 +83,7 @@ if __name__ == "__main__":
             alpha=0.7
         )
 
-    # Run animation (200 frames, 50ms per frame)
+    # Run animation
     ani = animation.FuncAnimation(fig, update, frames=200, interval=50, repeat=False)
 
     print("Rendering macro-events. Close the window to exit.")
